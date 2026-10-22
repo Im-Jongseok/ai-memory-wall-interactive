@@ -105,14 +105,6 @@
     $('scene-stat').classList.toggle('long',s.stat.length>25);
     $('scene-stat').hidden=!free&&!s.stat;
     $('scene-body').textContent=free?(page===7?'출판본의 저자 소개 페이지입니다. 휠로 확대하고 드래그로 이동하며 확인할 수 있습니다.':'원문에 표시된 영역을 선택하면 해당 그림·문단으로 이동합니다. 휠로 확대하거나 드래그로 직접 탐색할 수도 있습니다.'):s.body;
-    const outline=$('review-outline');outline.replaceChildren();outline.hidden=free||!s.outline;
-    if(!outline.hidden)s.outline.forEach((item,i)=>{
-      const b=document.createElement('button');b.type='button';b.className='outline-link';
-      const number=document.createElement('span');number.className='outline-number';number.textContent=String(i+1).padStart(2,'0');
-      const text=document.createElement('span'),title=document.createElement('strong'),detail=document.createElement('small');
-      title.textContent=item.title;detail.textContent=item.detail;text.append(title,detail);b.append(number,text);
-      b.addEventListener('click',()=>go(item.target));outline.append(b);
-    });
     $('scene-notes').textContent=(s.note||'').replace(/^- /gm,'• ');
     $('figure-tabs').hidden=free||!/^fig3[a-d]$/.test(s.id);
     document.querySelectorAll('.tab-buttons button').forEach(b=>b.classList.toggle('active',b.dataset.go===s.id));
