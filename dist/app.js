@@ -6,9 +6,8 @@
   const pageRatio = 773.858 / 566.929;
   const paperW = 1000, paperH = paperW * pageRatio;
   const pageNames = ['문제 제기\n초록·배경','성장의 격차\nFig. 1 · Fig. 2','지표와 실험 조건\n식 (1) · 각주 c·d','프로파일링\nFig. 3a–d','학습과 배포\nFig. 4 · 해결책','가속기 설계와 결론','저자 소개'];
-  const chapters = [...new Set(scenes.map(s => s.chapter))];
   const state = { index: 0, page: null, overview: false, manual: false, sourceOnly: false, notes: false, camera: {x:0,y:0,s:1}, freePage: null, renderToken: 0, dragging: null };
-  const views = ['cover','map-scene','reader','ending'];
+  const views = ['reader','ending'];
   const stage = $('stage'), paper = $('paper');
   paper.style.height = `${paperH}px`;
   const scene = () => scenes[state.index];
@@ -33,20 +32,8 @@
     go(Math.max(0,Math.min(scenes.length-1,state.index + direction)));
   }
   function buildNavigation() {
-    for (const [i,name] of chapters.entries()) {
-      const b = document.createElement('button'); b.className = 'chapter-button'; b.dataset.chapter = name;
-      b.innerHTML = `<span class="chapter-number">${String(i+1).padStart(2,'0')}</span><span>${name}</span><span class="chapter-dot"></span>`;
-      b.addEventListener('click',() => go(scenes.findIndex(s=>s.chapter===name))); $('chapters').append(b);
-    }
-    scenes.forEach((s,i) => {
-      const b=document.createElement('button'); b.title=`${i+1}. ${s.title.replace(/\n/g,' ')}`;
-      b.setAttribute('aria-label',b.title); b.dataset.index=i;
-      if(i && s.chapter!==scenes[i-1].chapter)b.classList.add('chapter-start');
-      b.addEventListener('click',()=>go(i)); $('timeline').append(b);
-    });
-    $('total-steps').textContent=String(scenes.length).padStart(2,'0');
-    for(const container of [$('map-pages'),$('explorer-pages')]) {
-      const count=container.id==='map-pages'?6:7;
+    for(const container of [$('explorer-pages')]) {
+      const count=7;
       for(let p=1;p<=count;p++){
         const b=document.createElement('button'); b.className='page-card'; b.dataset.page=p;
         b.setAttribute('aria-label',`원문 ${formatPage(p)}쪽: ${pageNames[p-1].replace(/\n/g,' ')}`);
@@ -75,7 +62,11 @@
     $('zoom-value').textContent=`${Math.round(camera.s/full*100)}%`;
     updateMinimap();
   }
-  function targetROI() { return state.freePage || state.overview || !scene().roi ? [0,0,1,1] : scene().roi; }
+  function targetROI() {
+    if(state.freePage || state.overview || !scene().roi)return [0,0,1,1];
+    if(scene().opening && stage.clientWidth<600)return [.065,.086,.49,.142];
+    return scene().roi;
+  }
   function setClip(roi) {
     const [x0,y0,x1,y1]=roi;
     paper.style.clipPath=`inset(${y0*100}% ${(1-x1)*100}% ${(1-y1)*100}% ${x0*100}%)`;
@@ -103,7 +94,7 @@
   }
   function makeHotspots(page) {
     $('hotspots').replaceChildren();
-    const candidates=scenes.filter(s=>s.page===page&&s.roi&&s.kind==='paper');
+    const candidates=scenes.filter(s=>s.page===page&&s.roi&&s.kind==='paper'&&!s.opening);
     candidates.forEach((s,i)=>{
       const [x0,y0,x1,y1]=s.roi;const b=document.createElement('button');b.className='hotspot';
       b.style.cssText=`left:${x0*100}%;top:${y0*100}%;width:${(x1-x0)*100}%;height:${(y1-y0)*100}%`;
@@ -132,6 +123,9 @@
     $('notes-btn').innerHTML=`노트 <span>${state.notes?'−':'＋'}</span>`;
     document.body.classList.toggle('exploring',free);
     makeHotspots(page);
+    $('source-highlights').replaceChildren();
+    if(s.highlight&&!free){const [x0,y0,x1,y1]=s.highlight;const marker=document.createElement('span');marker.className='title-highlight';marker.style.cssText=`left:${x0*100}%;top:${y0*100}%;width:${(x1-x0)*100}%;height:${(y1-y0)*100}%`;$('source-highlights').append(marker);}
+
     const changed=state.page!==page;
     if(changed){
       stage.classList.add('switching');paper.style.opacity='0';
@@ -146,17 +140,13 @@
   }
   function render() {
     const s=scene(), token=++state.renderToken;
-    const view=state.freePage?'reader':s.kind==='cover'?'cover':s.kind==='map'?'map-scene':s.kind==='end'?'ending':'reader';
+    const view=state.freePage?'reader':s.kind==='end'?'ending':'reader';
     views.forEach(id=>$(id).hidden=id!==view);
+    document.body.classList.toggle('title-scene',!!s.opening&&!state.freePage);
     document.body.classList.toggle('source-only',state.sourceOnly&&view==='reader');
-    document.querySelectorAll('.chapter-button').forEach(b=>{
-      b.setAttribute('aria-current',String(b.dataset.chapter===s.chapter));
-      b.classList.toggle('completed',chapters.indexOf(b.dataset.chapter)<chapters.indexOf(s.chapter));
-    });
-    document.querySelectorAll('#timeline button').forEach((b,i)=>{b.classList.toggle('active',i===state.index);b.classList.toggle('completed',i<state.index);if(i===state.index)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});
-    $('current-step').textContent=String(state.index+1).padStart(2,'0');$('current-chapter').textContent=s.chapter;
-    $('prev-btn').disabled=state.index===0&&!state.freePage;$('next-btn').disabled=state.index===scenes.length-1&&!state.freePage;
-    $('next-btn').innerHTML=state.freePage?'발표로 복귀 <span>↙</span>':s.kind==='cover'?'시작 <span>→</span>':'다음 <span>→</span>';
+    $('prev-btn').disabled=state.index===0&&!state.freePage;
+    $('next-btn').disabled=state.index===scenes.length-1&&!state.freePage;
+    $('next-btn').innerHTML=state.freePage?'복귀 <span>↙</span>':'다음 <span>→</span>';
     $('live-status').textContent=`${state.index+1}/${scenes.length}. ${s.title.replace(/\n/g,' ')}`;
     if(view==='reader')renderPaper(token);
   }
@@ -181,9 +171,9 @@
     catch{toast('전체 화면은 브라우저의 전체 화면 메뉴에서도 켤 수 있습니다.');}
   }
   function openDialog(id){const d=$(id);if(!d.open)d.showModal();}
-  $('start-btn').addEventListener('click',()=>go(1));$('prev-btn').addEventListener('click',()=>step(-1));$('next-btn').addEventListener('click',()=>step(1));
+  $('prev-btn').addEventListener('click',()=>step(-1));$('next-btn').addEventListener('click',()=>step(1));
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
-  $('map-btn').addEventListener('click',()=>openDialog('page-dialog'));$('help-btn').addEventListener('click',()=>openDialog('help-dialog'));
+
   $('fullscreen-btn').addEventListener('click',toggleFullscreen);$('overview-btn').addEventListener('click',toggleOverview);$('isolate-btn').addEventListener('click',toggleSourceOnly);$('notes-btn').addEventListener('click',toggleNotes);
   $('minimap').addEventListener('click',()=>{state.overview=true;fitScene();});$('mini-return').addEventListener('click',()=>{state.overview=true;fitScene();});
   $('zoom-in').addEventListener('click',()=>zoom(1.25));$('zoom-out').addEventListener('click',()=>zoom(.8));$('fit-btn').addEventListener('click',()=>{state.manual=false;fitScene();});
@@ -211,7 +201,7 @@
     const actions={'arrowright':()=>step(1),'pagedown':()=>step(1),' ':()=>step(1),'arrowleft':()=>step(-1),'pageup':()=>step(-1),'home':()=>go(0),'end':()=>go(scenes.length-1),'o':toggleOverview,'t':toggleSourceOnly,'n':toggleNotes,'m':()=>openDialog('page-dialog'),'h':()=>openDialog('help-dialog'),'?':()=>openDialog('help-dialog'),'f':toggleFullscreen,'+':()=>zoom(1.25),'=':()=>zoom(1.25),'-':()=>zoom(.8),'0':()=>fitScene(),'escape':()=>{if(state.sourceOnly)toggleSourceOnly();else if(state.freePage){state.freePage=null;render();}else{state.overview=true;fitScene();}}};
     if(actions[key]){e.preventDefault();actions[key]();}
   });
-  const resizeObserver=new ResizeObserver(()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!$('reader').hidden)fitScene(false);},100);});resizeObserver.observe(stage);
+  window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!$('reader').hidden)fitScene(false);},100);});
   window.addEventListener('hashchange',()=>{const id=decodeURIComponent(location.hash.slice(1));if(scenes.some(s=>s.id===id))go(id);});
   buildNavigation();const initial=decodeURIComponent(location.hash.slice(1));go(scenes.some(s=>s.id===initial)?initial:0);
   // Preload the source pages once; all interactions then use these original page images.

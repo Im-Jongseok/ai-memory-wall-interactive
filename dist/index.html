@@ -3,62 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f4f3ee">
+  <meta name="theme-color" content="#101214">
   <meta name="description" content="IEEE 출판본의 그림과 문단을 확대하며 읽는 AI and Memory Wall 인터랙티브 논문 리뷰">
   <title>AI and Memory Wall — 원문으로 읽는 논문 리뷰</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <a class="wordmark" href="#start" aria-label="첫 화면"><span class="brand-mark">m<span>↗</span></span><span>AI &amp; MEMORY WALL<small>INTERACTIVE PAPER REVIEW</small></span></a>
-    <div class="edition"><span class="status-dot"></span>IEEE Micro <span>44(3) · 2024</span></div>
-    <div class="header-actions">
-      <button id="map-btn" class="text-button" title="원문 페이지 탐색 (M)">원문 탐색 <span>↗</span></button>
-      <button id="help-btn" class="icon-button" aria-label="사용 방법 (H)" title="사용 방법 (H)">?</button>
-      <button id="fullscreen-btn" class="icon-button" aria-label="전체 화면 (F)" title="전체 화면 (F)">⛶</button>
-    </div>
-  </header>
-
-  <nav class="chapter-rail" aria-label="발표 섹션"><span class="rail-label">CONTENTS</span><div id="chapters"></div><div class="rail-bottom"><span>원문에서 시작해,<br>원문으로 돌아오는 리뷰.</span><a href="assets/AI-and-Memory-Wall-IEEE.pdf" target="_blank" rel="noopener">출판본 PDF <span>↗</span></a></div></nav>
+  <button id="fullscreen-btn" class="fullscreen-button" aria-label="전체 화면 (F)" title="전체 화면 (F)">⛶</button>
 
   <main id="app">
-    <section id="cover" class="cover">
-      <div class="cover-text">
-        <div class="eyebrow"><span>01 — PAPER REVIEW</span><span class="tiny-rule"></span><span>GHOLAMI ET AL.</span></div>
-        <h1>AI and<br>Memory <span>Wall.</span></h1>
-        <p class="cover-statement">계산은 빨라졌다.<br>데이터는 따라오지 못했다.</p>
-        <p class="cover-description">논문 원문의 그림과 문단 사이를 이동하며<br>AI의 병목이 어디에서 생기는지 읽어 봅니다.</p>
-        <button id="start-btn" class="primary-button">원문으로 들어가기 <span>↗</span></button>
-        <div class="cover-meta">IEEE MICRO · MAY/JUNE 2024<span>pp. 33–39</span></div>
-      </div>
-      <div class="cover-art" aria-label="논문 원문과 Fig. 1 미리보기">
-        <span class="art-caption">THE PAPER, UP CLOSE.</span>
-        <div class="cover-paper"><img src="assets/page-1.webp" alt="AI and Memory Wall 출판본 첫 페이지"></div>
-        <button class="figure-peek" data-go="fig1" aria-label="원문 Fig. 1 확대"><span class="peek-label">FIG. 1 <span>↗</span></span><span class="peek-crop"><img src="assets/page-2.webp" alt="연산과 메모리 대역폭 성장 그래프"></span><span class="peek-footer">점점 벌어지는 성장의 격차</span></button>
-        <div class="paper-stamp">ORIGINAL<br>FIGURES<br><b>100%</b></div>
-      </div>
-    </section>
-
-    <section id="map-scene" class="map-scene" hidden>
-      <div class="map-heading"><div class="eyebrow">A READING MAP</div><h1>요약보다 먼저,<br><em>근거의 위치</em>를 봅니다.</h1><p>페이지를 선택하거나, 아래의 다음 버튼으로 순서대로 진행하세요.</p></div>
-      <div id="map-pages" class="page-grid"></div>
-      <div class="reading-flow"><span>원문 전체</span><i>→</i><span>그림·문단 확대</span><i>→</i><span>한글 해석</span><i>→</i><span>맥락으로 복귀</span></div>
-    </section>
-
     <section id="reader" class="reader" hidden>
       <div class="scene-heading"><div><div id="scene-kicker" class="eyebrow"></div><h1 id="scene-title"></h1></div><div class="heading-page"><span id="page-number"></span><small id="page-kind">PRINTED PAGE</small></div></div>
       <div class="reading-layout">
         <div class="source-column">
           <div class="source-toolbar"><div class="source-label"><span class="status-dot"></span><span id="view-label">원문 전체</span><span id="zoom-value">100%</span></div><div class="source-actions"><button id="overview-btn" class="tool-button" title="전체 페이지와 확대 보기 전환 (O)">전체 페이지 <span>↙</span></button><button id="isolate-btn" class="tool-button" title="해석을 접고 원문 크게 보기 (T)">원문만 <span>⤢</span></button></div></div>
           <div id="stage" class="stage" tabindex="0" aria-label="논문 원문. 드래그로 이동하고 마우스 휠로 확대할 수 있습니다.">
-            <div id="paper" class="paper"><img id="paper-image" draggable="false" alt=""><div id="hotspots" class="hotspots"></div></div>
+            <div id="paper" class="paper"><img id="paper-image" draggable="false" alt=""><div id="hotspots" class="hotspots"></div><div id="source-highlights" class="source-highlights" aria-hidden="true"></div></div>
             <div id="stage-tip" class="stage-tip">표시한 영역을 눌러 확대 <span>↗</span></div>
             <div class="zoom-controls"><button id="zoom-out" aria-label="축소">−</button><button id="fit-btn" title="현재 장면에 맞추기" aria-label="현재 장면에 맞추기">⌖</button><button id="zoom-in" aria-label="확대">+</button></div>
           </div>
           <div class="source-caption"><span id="source-citation"></span><span>휠로 확대 · 드래그로 이동</span></div>
         </div>
         <aside id="interpretation" class="interpretation">
-          <div class="interpretation-heading"><span class="eyebrow">READING THE EVIDENCE</span><button id="notes-btn" class="note-toggle" title="발표자 노트 (N)" aria-expanded="false">노트 <span>＋</span></button></div>
+          <div class="interpretation-heading"><button id="notes-btn" class="note-toggle" title="발표자 노트 (N)" aria-expanded="false">노트 <span>＋</span></button></div>
           <div id="scene-stat" class="scene-stat"></div>
           <p id="scene-body" class="scene-body"></p>
           <div id="figure-tabs" class="figure-tabs" hidden><div class="eyebrow">FIG. 3 · 네 지표 연결하기</div><div class="tab-buttons"><button data-go="fig3a">FLOPs</button><button data-go="fig3b">MOPs</button><button data-go="fig3c">AI</button><button data-go="fig3d">Latency</button></div><div class="condition">Intel Gold 6242 CPU · batch 1<br>비교 기준: sequence length 128</div></div>
@@ -76,7 +43,7 @@
     </section>
   </main>
 
-  <footer class="presentation-controls"><div class="progress-meta"><span id="current-step">01</span><span class="progress-divider">/</span><span id="total-steps">31</span><span id="current-chapter">시작</span></div><div id="timeline" class="timeline" aria-label="발표 진행 순서"></div><div class="nav-buttons"><button id="prev-btn" class="nav-button" aria-label="이전 장면 (왼쪽 화살표)">←</button><button id="next-btn" class="next-button">다음 <span>→</span></button></div></footer>
+  <footer class="presentation-controls"><button id="prev-btn" class="navigation-button" aria-label="이전 장면 (왼쪽 화살표)"><span>←</span> 이전</button><button id="next-btn" class="navigation-button" aria-label="다음 장면 (오른쪽 화살표)">다음 <span>→</span></button></footer>
   <div id="live-status" class="sr-only" aria-live="polite"></div><div id="toast" class="toast" role="status"></div>
 
   <dialog id="page-dialog" class="page-dialog"><div class="dialog-top"><div><div class="eyebrow">EXPLORE THE ORIGINAL</div><h2>원문 페이지 탐색</h2></div><button class="dialog-close icon-button" aria-label="닫기">×</button></div><p>페이지를 누르면 전체 원문을 볼 수 있습니다. 표시된 그림과 문단은 바로 확대할 수 있습니다.</p><div id="explorer-pages" class="page-grid"></div></dialog>
