@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const scenes = window.REVIEW_SCENES;
+  const sceneAliases={'p1-in':'fig1','p2-in':'fig2','p3-in':'equation','p3-out':'fig3a','p4-in':'fig3a','p4-out':'fig4','p5-in':'fig4','p6-in':'hardware'};
   const asset = name => window.REVIEW_ASSETS?.[name] || `assets/${name}`;
   const $ = id => document.getElementById(id);
   const arrowIcon = direction => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${direction==='left'?'M19 12H5m7-7-7 7 7 7':'M5 12h14m-7-7 7 7-7 7'}"/></svg>`;
@@ -21,6 +22,7 @@
     clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 2200);
   }
   function go(target) {
+    target=sceneAliases[target]||target;
     const index = typeof target === 'number' ? target : scenes.findIndex(s => s.id === target);
     if (index < 0 || index >= scenes.length) return;
     state.index = index; state.freePage = null; state.overview = false; state.manual = false;
@@ -44,8 +46,6 @@
   }
   function openPage(page) {
     $('page-dialog').close();
-    const target = scenes.findIndex(s=>s.page===page && !s.roi && s.kind==='paper');
-    if(target>=0){go(target);return;}
     state.freePage=page; state.overview=true; state.manual=false; render();
   }
   function fitCamera(roi=[0,0,1,1]) {
@@ -116,8 +116,7 @@
       const img=$('paper-image');img.src=asset(`page-${page}.webp`);$('focus-image').src=img.src;img.alt=`AI and Memory Wall IEEE 출판본 ${formatPage(page)}쪽`;
       try{await Promise.all([img.decode(),$('focus-image').decode()]);}catch{toast('원문 이미지를 불러오지 못했습니다. assets 폴더를 확인해 주세요.');}
       if(token!==state.renderToken)return;
-      state.page=page;setFocus(null);applyCamera(fitCamera());paper.style.opacity='1';
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{if(token!==state.renderToken)return;stage.classList.remove('switching');fitScene();}));
+      state.page=page;fitScene(false);paper.style.opacity='1';
     }else{fitScene();}
     if(!matchMedia('(prefers-reduced-motion: reduce)').matches){$('interpretation').classList.remove('scene-enter');void $('interpretation').offsetWidth;$('interpretation').classList.add('scene-enter');}
     $('reader').scrollTop=0;$('interpretation').scrollTop=0;
@@ -185,8 +184,8 @@
     if(actions[key]){e.preventDefault();actions[key]();}
   });
   window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!$('reader').hidden)fitScene(false);},100);});
-  window.addEventListener('hashchange',()=>{const id=decodeURIComponent(location.hash.slice(1));if(scenes.some(s=>s.id===id))go(id);});
-  buildNavigation();const initial=decodeURIComponent(location.hash.slice(1));go(scenes.some(s=>s.id===initial)?initial:0);
+  window.addEventListener('hashchange',()=>{const id=decodeURIComponent(location.hash.slice(1));if(sceneAliases[id]||scenes.some(s=>s.id===id))go(id);});
+  buildNavigation();const initial=decodeURIComponent(location.hash.slice(1));go(sceneAliases[initial]||scenes.some(s=>s.id===initial)?(sceneAliases[initial]||initial):0);
   // Preload the source pages once; all interactions then use these original page images.
   const preload=()=>{for(let p=1;p<=7;p++){const img=new Image();img.src=asset(`page-${p}.webp`);}};
   if('requestIdleCallback'in window)requestIdleCallback(preload);else setTimeout(preload,1000);
