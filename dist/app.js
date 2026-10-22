@@ -58,7 +58,7 @@
     state.camera=camera; state.manual=manual;
     stage.classList.toggle('manual',manual);
     paper.style.transform=`translate(${camera.x}px,${camera.y}px) scale(${camera.s})`;
-    paper.style.setProperty('--context-blur',`${Math.max(1.5,Math.min(12,3/camera.s))}px`);
+    paper.style.setProperty('--context-blur',`${Math.max(.15,Math.min(4,.6/camera.s))}px`);
   }
   function targetROI() {
     if(state.freePage || state.overview || !scene().roi)return [0,0,1,1];
