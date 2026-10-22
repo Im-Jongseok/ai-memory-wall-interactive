@@ -103,7 +103,16 @@
     $('scene-title').textContent=free?`원문 p.${formatPage(page)}\n직접 탐색하기.`:s.title;
     $('scene-stat').textContent=free?'The original.':s.stat;
     $('scene-stat').classList.toggle('long',s.stat.length>25);
+    $('scene-stat').hidden=!free&&!s.stat;
     $('scene-body').textContent=free?(page===7?'출판본의 저자 소개 페이지입니다. 휠로 확대하고 드래그로 이동하며 확인할 수 있습니다.':'원문에 표시된 영역을 선택하면 해당 그림·문단으로 이동합니다. 휠로 확대하거나 드래그로 직접 탐색할 수도 있습니다.'):s.body;
+    const outline=$('review-outline');outline.replaceChildren();outline.hidden=free||!s.outline;
+    if(!outline.hidden)s.outline.forEach((item,i)=>{
+      const b=document.createElement('button');b.type='button';b.className='outline-link';
+      const number=document.createElement('span');number.className='outline-number';number.textContent=String(i+1).padStart(2,'0');
+      const text=document.createElement('span'),title=document.createElement('strong'),detail=document.createElement('small');
+      title.textContent=item.title;detail.textContent=item.detail;text.append(title,detail);b.append(number,text);
+      b.addEventListener('click',()=>go(item.target));outline.append(b);
+    });
     $('scene-notes').textContent=(s.note||'').replace(/^- /gm,'• ');
     $('figure-tabs').hidden=free||!/^fig3[a-d]$/.test(s.id);
     document.querySelectorAll('.tab-buttons button').forEach(b=>b.classList.toggle('active',b.dataset.go===s.id));
@@ -111,11 +120,11 @@
     $('source-reference').hidden=s.id!=='source';
     document.body.classList.toggle('exploring',free);
     makeHotspots(page);
-    const changed=state.page!==page;
+    const changed=state.page!==page||$('paper-image').getAttribute('src')!==asset(`page-${page}.webp`)||paper.style.opacity==='0';
     if(changed){
       stage.classList.add('switching');paper.style.opacity='0';
       const img=$('paper-image');img.src=asset(`page-${page}.webp`);$('focus-image').src=img.src;img.alt=`AI and Memory Wall IEEE 출판본 ${formatPage(page)}쪽`;
-      try{await Promise.all([img.decode(),$('focus-image').decode()]);}catch{toast('원문 이미지를 불러오지 못했습니다. assets 폴더를 확인해 주세요.');}
+      try{await Promise.all([img.decode(),$('focus-image').decode()]);}catch{if(token!==state.renderToken)return;toast('원문 이미지를 불러오지 못했습니다. assets 폴더를 확인해 주세요.');}
       if(token!==state.renderToken)return;
       state.page=page;fitScene(false);paper.style.opacity='1';
     }else{fitScene();}

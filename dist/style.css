@@ -16,3 +16,5 @@
 /* Typography follows the paper: neutral body text and IEEE-blue labels. */
 .scene-heading h1{word-break:keep-all;font-weight:600;font-size:clamp(24px,2.05vw,33px);line-height:1.4;letter-spacing:-.025em}.scene-stat{color:#292929;font-size:clamp(28px,2.4vw,38px);font-weight:500;line-height:1.35;letter-spacing:-.02em}.scene-body{line-height:1.8;letter-spacing:-.01em}.eyebrow{letter-spacing:.07em}.scene-stat.long{font-size:clamp(23px,1.9vw,32px)}
 @media(max-width:1000px){.scene-heading h1{font-size:26px}.scene-stat{font-size:30px}.scene-stat.long{font-size:25px}}
+
+.review-outline{margin-top:26px}.outline-link{width:100%;display:flex;align-items:baseline;gap:14px;padding:13px 0;text-align:left;border-top:1px solid var(--line)}.outline-number{font-size:11px;color:var(--accent);font-variant-numeric:tabular-nums;flex-shrink:0}.outline-link strong{display:block;font-size:15px;line-height:1.5;font-weight:500;letter-spacing:-.015em}.outline-link small{display:block;margin-top:3px;font-size:12px;line-height:1.5;color:#777f84}.outline-link:hover strong{color:var(--accent)}
