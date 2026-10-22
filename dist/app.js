@@ -48,10 +48,10 @@
     $('page-dialog').close();
     state.freePage=page; state.overview=true; state.manual=false; render();
   }
-  function fitCamera(roi=[0,0,1,1]) {
+  function fitCamera(roi=[0,0,1,1],maxScale=Infinity) {
     const w=stage.clientWidth,h=stage.clientHeight;
     const pad=w<450?18:32, rw=(roi[2]-roi[0])*paperW,rh=(roi[3]-roi[1])*paperH;
-    const s=Math.min((w-pad*2)/rw,(h-pad*2)/rh);
+    const s=Math.min((w-pad*2)/rw,(h-pad*2)/rh,maxScale);
     return {s,x:(w-rw*s)/2-roi[0]*paperW*s,y:(h-rh*s)/2-roi[1]*paperH*s};
   }
   function applyCamera(camera,manual=false) {
@@ -76,8 +76,9 @@
     const roi=targetROI(); state.manual=false;
     stage.classList.toggle('switching',!animate);
     setFocus(state.overview||state.freePage||scene().focus===false?null:(scene().highlight||scene().roi));
-    if(scene().panTop!==undefined&&!state.overview&&!state.freePage){const scale=stage.clientWidth/paperW;applyCamera({s:scale,x:0,y:-scene().panTop*paperH*scale});}
-    else applyCamera(fitCamera(roi));
+    const maxScale=state.overview||state.freePage?Infinity:(scene().maxScale??Infinity);
+    if(scene().panTop!==undefined&&!state.overview&&!state.freePage){const scale=Math.min(stage.clientWidth/paperW,maxScale);applyCamera({s:scale,x:(stage.clientWidth-paperW*scale)/2,y:-scene().panTop*paperH*scale});}
+    else applyCamera(fitCamera(roi,maxScale));
     updateHotspots();
     if(!animate) requestAnimationFrame(()=>stage.classList.remove('switching'));
   }
