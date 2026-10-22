@@ -3,6 +3,7 @@
   const scenes = window.REVIEW_SCENES;
   const asset = name => window.REVIEW_ASSETS?.[name] || `assets/${name}`;
   const $ = id => document.getElementById(id);
+  const arrowIcon = direction => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${direction==='left'?'M19 12H5m7-7-7 7 7 7':'M5 12h14m-7-7 7 7-7 7'}"/></svg>`;
   const pageRatio = 773.858 / 566.929;
   const paperW = 1000, paperH = paperW * pageRatio;
   const pageNames = ['문제 제기\n초록·배경','성장의 격차\nFig. 1 · Fig. 2','지표와 실험 조건\n식 (1) · 각주 c·d','프로파일링\nFig. 3a–d','학습과 배포\nFig. 4 · 해결책','가속기 설계와 결론','저자 소개'];
@@ -61,7 +62,6 @@
   }
   function targetROI() {
     if(state.freePage || state.overview || !scene().roi)return [0,0,1,1];
-    if(scene().opening && stage.clientWidth<600)return [.065,.09,.49,.133];
     return scene().roi;
   }
   function setFocus(roi) {
@@ -75,11 +75,14 @@
     if(!isPaper()&&!state.freePage)return;
     const roi=targetROI(); state.manual=false;
     stage.classList.toggle('switching',!animate);
-    setFocus(state.overview||state.freePage?null:(scene().highlight||scene().roi)); applyCamera(fitCamera(roi)); updateHotspots();
+    setFocus(state.overview||state.freePage||scene().focus===false?null:(scene().highlight||scene().roi));
+    if(scene().panTop!==undefined&&!state.overview&&!state.freePage){const scale=stage.clientWidth/paperW;applyCamera({s:scale,x:0,y:-scene().panTop*paperH*scale});}
+    else applyCamera(fitCamera(roi));
+    updateHotspots();
     if(!animate) requestAnimationFrame(()=>stage.classList.remove('switching'));
   }
   function updateHotspots() {
-    $('hotspots').hidden=state.manual||(!state.overview&&!!scene().roi);
+    $('hotspots').hidden=state.manual||(!state.overview&&(!!scene().roi||scene().panTop!==undefined));
   }
   function makeHotspots(page) {
     $('hotspots').replaceChildren();
@@ -123,10 +126,12 @@
     const s=scene(), token=++state.renderToken;
     const view='reader';
     document.body.classList.toggle('title-scene',!!s.opening&&!state.freePage);
+    document.body.classList.toggle('page-pan',s.panTop!==undefined&&!state.freePage);
     document.body.classList.toggle('source-only',state.sourceOnly&&view==='reader');
     $('prev-btn').disabled=state.index===0&&!state.freePage;
     $('next-btn').disabled=state.index===scenes.length-1&&!state.freePage;
-    $('next-btn').innerHTML=state.freePage?'복귀 <span>↙</span>':'다음 <span>→</span>';
+    $('prev-btn').innerHTML=arrowIcon('left');
+    $('next-btn').innerHTML=arrowIcon('right');
     $('live-status').textContent=`${state.index+1}/${scenes.length}. ${s.title.replace(/\n/g,' ')}`;
     if(view==='reader')renderPaper(token);
   }
@@ -156,7 +161,7 @@
 
   $('fullscreen-btn').addEventListener('click',toggleFullscreen);
   for(const d of document.querySelectorAll('dialog')){d.querySelector('.dialog-close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});}
-  stage.addEventListener('wheel',e=>{e.preventDefault();const r=stage.getBoundingClientRect();zoom(Math.exp(-Math.max(-70,Math.min(70,e.deltaY))*.007),{x:e.clientX-r.left,y:e.clientY-r.top});},{passive:false});
+  stage.addEventListener('wheel',e=>{e.preventDefault();if(e.ctrlKey||e.metaKey){const r=stage.getBoundingClientRect();zoom(Math.exp(-Math.max(-70,Math.min(70,e.deltaY))*.007),{x:e.clientX-r.left,y:e.clientY-r.top});}else{setFocus(null);applyCamera({...state.camera,x:state.camera.x-e.deltaX,y:state.camera.y-e.deltaY},true);updateHotspots();}},{passive:false});
   stage.addEventListener('pointerdown',e=>{
     if(e.button!==0)return;
     state.dragging={x:e.clientX,y:e.clientY,c:{...state.camera},moved:false,target:e.target};
@@ -176,7 +181,7 @@
     if(document.querySelector('dialog[open]'))return;
     if((e.key===' '||e.key==='Enter')&&e.target.closest('button,a'))return;
     const key=e.key.toLowerCase();
-    const actions={'arrowright':()=>step(1),'pagedown':()=>step(1),' ':()=>step(1),'arrowleft':()=>step(-1),'pageup':()=>step(-1),'home':()=>go(0),'end':()=>go(scenes.length-1),'o':toggleOverview,'t':toggleSourceOnly,'n':toggleNotes,'m':()=>openDialog('page-dialog'),'h':()=>openDialog('help-dialog'),'?':()=>openDialog('help-dialog'),'f':toggleFullscreen,'+':()=>zoom(1.25),'=':()=>zoom(1.25),'-':()=>zoom(.8),'0':()=>fitScene(),'escape':()=>{if(state.sourceOnly)toggleSourceOnly();else if(state.freePage){state.freePage=null;render();}else{state.overview=true;fitScene();}}};
+    const actions={'arrowdown':()=>step(1),'arrowup':()=>step(-1),'arrowright':()=>step(1),'pagedown':()=>step(1),' ':()=>step(1),'arrowleft':()=>step(-1),'pageup':()=>step(-1),'home':()=>go(0),'end':()=>go(scenes.length-1),'o':toggleOverview,'t':toggleSourceOnly,'n':toggleNotes,'m':()=>openDialog('page-dialog'),'h':()=>openDialog('help-dialog'),'?':()=>openDialog('help-dialog'),'f':toggleFullscreen,'+':()=>zoom(1.25),'=':()=>zoom(1.25),'-':()=>zoom(.8),'0':()=>fitScene(),'escape':()=>{if(state.sourceOnly)toggleSourceOnly();else if(state.freePage){state.freePage=null;render();}else{state.overview=true;fitScene();}}};
     if(actions[key]){e.preventDefault();actions[key]();}
   });
   window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!$('reader').hidden)fitScene(false);},100);});
