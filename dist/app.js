@@ -64,7 +64,7 @@
   }
   function targetROI() {
     if(state.freePage || state.overview || !scene().roi)return [0,0,1,1];
-    if(scene().opening && stage.clientWidth<600)return [.065,.086,.49,.142];
+    if(scene().opening && stage.clientWidth<600)return [.065,.09,.49,.133];
     return scene().roi;
   }
   function setClip(roi) {
