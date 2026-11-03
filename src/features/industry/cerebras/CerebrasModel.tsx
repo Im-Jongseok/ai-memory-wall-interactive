@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useCerebrasMode } from './cerebras-context';
+import { useCerebrasMode } from './context';
 import { useCerebrasMotion } from './useCerebrasMotion';
-import model from '../../papers/ai-memory-wall/generated/cerebras-anatomy.json';
+import model from '../../../papers/ai-memory-wall/generated/cerebras-anatomy.json';
 import cerebrasLogo from './assets/cerebras-logo-black.png?inline';
-import './cerebras-model.css';
+import './model.css';
 
 // Trusted, build-generated Anatomy geometry only. No website HTML enters this markup.
 const ART = {

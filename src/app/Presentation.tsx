@@ -1,6 +1,6 @@
 import { usePaperToModelTransition } from './usePaperToModelTransition';
 import { CEREBRAS_MODES, CXMT_MODES, sceneStepCount } from './scene-steps';
-import { PimStepProvider } from '../features/industry/pim-context';
+import { PimStepProvider } from '../features/industry/pim/context';
 import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import type { PaperDefinition } from '../papers/types';
 import { PresentationLayout } from '../components/layout/PresentationLayout';
@@ -10,8 +10,8 @@ import { PageExplorer, HelpDialog } from '../components/layout/PresentationDialo
 import { PaperStage } from '../features/paper/PaperStage';
 import { usePaperViewer } from '../features/paper/usePaperViewer';
 import { HbmPanel } from '../features/hbm/HbmPanel';
-import { CxmtModeProvider } from '../features/industry/cxmt-context';
-import { CerebrasModeProvider } from '../features/industry/cerebras-context';
+import { CxmtModeProvider } from '../features/industry/cxmt/context';
+import { CerebrasModeProvider } from '../features/industry/cerebras/context';
 import { IndustryDiagram } from '../features/industry/IndustryDiagram';
 export function Presentation({
   paper,

@@ -1,4 +1,4 @@
-import type { CxmtMode } from './cxmt-context';
+import type { CxmtMode } from './context';
 export const CXMT_EXPLANATION = {
   baseline: {
     label: 'CXMT · 왜 6F²였나?',

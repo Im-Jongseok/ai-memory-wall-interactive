@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { usePimStep } from './pim-context';
+import { usePimStep } from './context';
 import { PimCoreModel } from './PimCoreModel';
 import { PimSystemDiagram } from './PimSystemDiagram';
-import { PIM_MODEL, PIM_PRODUCTS, PIM_PARTIALS, PIM_RESULT, PIM_STEPS, pimMode } from './pim-model';
-import './pim.css';
+import { PIM_MODEL, PIM_PRODUCTS, PIM_PARTIALS, PIM_STEPS, pimMode } from './model';
+import './model.css';
 function Flow({ d, type }: { d: string; type: string }) {
   return (
     <>

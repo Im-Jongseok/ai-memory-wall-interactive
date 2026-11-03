@@ -1,7 +1,7 @@
-import { useCerebrasMode } from './cerebras-context';
-import { PimDetails } from './PimDetails';
-import { CxmtDetails } from './CxmtDetails';
-import { CerebrasDetails } from './CerebrasDetails';
+import { useCerebrasMode } from './cerebras/context';
+import { PimDetails } from './pim/PimDetails';
+import { CxmtDetails } from './cxmt/CxmtDetails';
+import { CerebrasDetails } from './cerebras/CerebrasDetails';
 import type { IndustryScene } from '../../papers/types';
 export function IndustryDetails({ scene }: { scene: IndustryScene }) {
   const { mode } = useCerebrasMode();

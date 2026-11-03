@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import type { ReactNode } from 'react';
-import { PIM_GROUPS, PIM_STEPS } from './pim-model';
+import { PIM_GROUPS, PIM_STEPS } from './model';
 const Context = createContext({ index: 0, setPlaying: (_playing: boolean) => {} });
 /** Slides choose a group; only that group's demonstration plays automatically. */
 export function PimStepProvider({

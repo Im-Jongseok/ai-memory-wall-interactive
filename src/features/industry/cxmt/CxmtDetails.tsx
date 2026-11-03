@@ -1,6 +1,6 @@
-import { useCxmtMode } from './cxmt-context';
-import type { IndustryScene } from '../../papers/types';
-import reference from './cxmt-reference.json';
+import { useCxmtMode } from './context';
+import type { IndustryScene } from '../../../papers/types';
+import reference from './reference.json';
 export function CxmtDetails({ scene }: { scene: IndustryScene }) {
   const { mode } = useCxmtMode();
   const { arrayArea, originalArea, compactArea } = reference;

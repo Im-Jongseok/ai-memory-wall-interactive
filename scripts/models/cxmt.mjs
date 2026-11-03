@@ -6,10 +6,10 @@
  * Anatomy MIT, commit 1482e8469b0a9e0d8cc18ea2740a01423d29ae80.
  */
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
-import * as k from './tools/anatomy/iso-kit.mjs';
-import * as A from './tools/anatomy/audit.mjs';
+import * as k from '../vendor/anatomy/iso-kit.mjs';
+import * as A from '../vendor/anatomy/audit.mjs';
 const reference = JSON.parse(
-  readFileSync(new URL('./src/features/industry/cxmt-reference.json', import.meta.url), 'utf8'),
+  readFileSync(new URL('../../src/features/industry/cxmt/reference.json', import.meta.url), 'utf8'),
 );
 const F = 18,
   W = 12 * F,
@@ -153,9 +153,11 @@ const result = {
   freedAreaStart: k.planOutline({ x: W, y: 0, w: 0, d: D, r: 0 }, 2.1, P, 1),
   freedArea: k.planOutline({ x: 8 * F, y: 0, w: 4 * F, d: D, r: 0 }, 2.1, P, 1),
 };
-mkdirSync('src/papers/ai-memory-wall/generated', { recursive: true });
+mkdirSync(new URL('../../src/papers/ai-memory-wall/generated/', import.meta.url), {
+  recursive: true,
+});
 writeFileSync(
-  'src/papers/ai-memory-wall/generated/cxmt-anatomy.json',
+  new URL('../../src/papers/ai-memory-wall/generated/cxmt-anatomy.json', import.meta.url),
   JSON.stringify(result) + '\n',
 );
 console.log(

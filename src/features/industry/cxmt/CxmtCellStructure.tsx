@@ -1,4 +1,4 @@
-import type { CxmtMode } from './cxmt-context';
+import type { CxmtMode } from './context';
 /** Educational section, based on BCAT / vertical-channel references.
  * The U is a current path, not a flat transistor; vertical capacitors exist in 6F² too.
  * The two gate faces in the VSG section represent one gate surrounding an insulated channel.

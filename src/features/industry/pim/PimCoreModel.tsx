@@ -1,4 +1,4 @@
-import model from '../../papers/ai-memory-wall/generated/pim-anatomy.json';
+import model from '../../../papers/ai-memory-wall/generated/pim-anatomy.json';
 const ART = <g dangerouslySetInnerHTML={{ __html: model.core.markup }} />;
 export function PimCoreModel() {
   const { anchors, command, result, read } = model.core;

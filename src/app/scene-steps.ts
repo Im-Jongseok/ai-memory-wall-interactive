@@ -1,5 +1,5 @@
 import type { ReviewScene } from '../papers/types';
-import { PIM_GROUPS } from '../features/industry/pim-model';
+import { PIM_GROUPS } from '../features/industry/pim/model';
 export const CEREBRAS_MODES = ['wafer', 'core', 'stack'] as const;
 export const CXMT_MODES = ['baseline', 'compact', 'array', 'density'] as const;
 export function sceneStepCount(scene: ReviewScene) {

@@ -1,4 +1,4 @@
-import { useCerebrasMode } from './cerebras-context';
+import { useCerebrasMode } from './context';
 export function CerebrasDetails() {
   const { mode } = useCerebrasMode();
   if (mode === 'core')

@@ -6,8 +6,8 @@
  * Geometry/paint/audit: wheresryan22/anatomy, MIT, 1482e8469b0a9e0d8cc18ea2740a01423d29ae80.
  */
 import { writeFileSync, mkdirSync } from 'node:fs';
-import * as k from './tools/anatomy/iso-kit.mjs';
-import * as A from './tools/anatomy/audit.mjs';
+import * as k from '../vendor/anatomy/iso-kit.mjs';
+import * as A from '../vendor/anatomy/audit.mjs';
 const WIDTH = 760,
   HEIGHT = 550;
 const WSE_AREA = 46225,
@@ -303,9 +303,11 @@ const result = {
   stack: build('stack'),
   core: core(),
 };
-mkdirSync('src/papers/ai-memory-wall/generated', { recursive: true });
+mkdirSync(new URL('../../src/papers/ai-memory-wall/generated/', import.meta.url), {
+  recursive: true,
+});
 writeFileSync(
-  'src/papers/ai-memory-wall/generated/cerebras-anatomy.json',
+  new URL('../../src/papers/ai-memory-wall/generated/cerebras-anatomy.json', import.meta.url),
   JSON.stringify(result) + '\n',
 );
 console.log(

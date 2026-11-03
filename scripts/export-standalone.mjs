@@ -73,7 +73,7 @@ const licenses = await Promise.all(
     'node_modules/react/LICENSE',
     'node_modules/react-dom/LICENSE',
     'node_modules/three/LICENSE',
-    'tools/anatomy/LICENSE',
+    'scripts/vendor/anatomy/LICENSE',
   ].map((file) => readFile(resolve(root, file), 'utf8')),
 );
 const escapeScript = (text) => text.replace(/<\/script/gi, '<\\/script');

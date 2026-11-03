@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { RefObject } from 'react';
-import type { CerebrasMode } from './cerebras-context';
+import type { CerebrasMode } from './context';
 export interface CerebrasLayers {
   wafer: RefObject<SVGGElement | null>;
   core: RefObject<SVGGElement | null>;

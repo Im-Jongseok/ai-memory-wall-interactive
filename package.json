@@ -5,15 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "model": "node build_hbm_anatomy.mjs && node build_cerebras_anatomy.mjs && node build_cxmt_anatomy.mjs && node build_pim_anatomy.mjs",
+    "model": "node scripts/models/build.mjs",
     "typecheck": "tsc --noEmit",
     "build": "npm run model && npm run typecheck && vite build && npm run export",
     "preview": "vite preview --host 127.0.0.1",
     "export": "node scripts/export-standalone.mjs",
     "format": "prettier --write src scripts index.html vite.config.ts docs README.md",
-    "audit:cerebras": "node build_cerebras_anatomy.mjs --audit",
-    "audit:cxmt": "node build_cxmt_anatomy.mjs --audit",
-    "audit:pim": "node build_pim_anatomy.mjs"
+    "audit:cerebras": "node scripts/models/cerebras.mjs --audit",
+    "audit:cxmt": "node scripts/models/cxmt.mjs --audit",
+    "audit:pim": "node scripts/models/pim.mjs"
   },
   "dependencies": {
     "react": "19.3.1",

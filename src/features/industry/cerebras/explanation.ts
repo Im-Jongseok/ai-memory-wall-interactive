@@ -1,4 +1,4 @@
-import type { CerebrasMode } from './cerebras-context';
+import type { CerebrasMode } from './context';
 export const CEREBRAS_EXPLANATION = {
   core: {
     label: 'CEREBRAS · SRAM 이해',

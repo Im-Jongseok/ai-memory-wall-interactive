@@ -3,9 +3,9 @@
  * Parts: two substrates/dies, bank arrays, 16 PCU lanes, host compute tiles,
  * interface pads and chip-edge contacts. Uses the same Anatomy projection as Cerebras.
  */
-import { writeFileSync } from 'node:fs';
-import * as k from './tools/anatomy/iso-kit.mjs';
-import * as A from './tools/anatomy/audit.mjs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import * as k from '../vendor/anatomy/iso-kit.mjs';
+import * as A from '../vendor/anatomy/audit.mjs';
 const hex = (n) => '#' + n.toString(16).padStart(6, '0');
 const tint = (c, f) =>
   hex([16, 8, 0].reduce((a, s) => a + (Math.min(255, Math.round(((c >> s) & 255) * f)) << s), 0));
@@ -123,8 +123,11 @@ function build(system) {
 }
 const core = build(false),
   system = build(true);
+mkdirSync(new URL('../../src/papers/ai-memory-wall/generated/', import.meta.url), {
+  recursive: true,
+});
 writeFileSync(
-  'src/papers/ai-memory-wall/generated/pim-anatomy.json',
+  new URL('../../src/papers/ai-memory-wall/generated/pim-anatomy.json', import.meta.url),
   JSON.stringify({
     source: { name: 'Anatomy', commit: '1482e8469b0a9e0d8cc18ea2740a01423d29ae80', license: 'MIT' },
     core,

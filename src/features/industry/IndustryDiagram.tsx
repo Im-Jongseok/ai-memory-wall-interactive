@@ -1,13 +1,13 @@
 import { lazy, Suspense } from 'react';
 import './industry.css';
 const CerebrasModel = lazy(() =>
-  import('./CerebrasModel').then((module) => ({ default: module.CerebrasModel })),
+  import('./cerebras/CerebrasModel').then((module) => ({ default: module.CerebrasModel })),
 );
 const CxmtModel = lazy(() =>
-  import('./CxmtModel').then((module) => ({ default: module.CxmtModel })),
+  import('./cxmt/CxmtModel').then((module) => ({ default: module.CxmtModel })),
 );
 const PimDiagram = lazy(() =>
-  import('./PimDiagram').then((module) => ({ default: module.PimDiagram })),
+  import('./pim/PimDiagram').then((module) => ({ default: module.PimDiagram })),
 );
 export function IndustryDiagram({ topic }: { topic: 'cerebras' | 'cxmt' | 'pim' }) {
   return (

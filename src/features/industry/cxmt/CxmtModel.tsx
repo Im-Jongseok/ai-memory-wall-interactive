@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useCxmtMode } from './cxmt-context';
+import { useCxmtMode } from './context';
 import { CxmtCellStructure } from './CxmtCellStructure';
-import model from '../../papers/ai-memory-wall/generated/cxmt-anatomy.json';
-import './cxmt-model.css';
+import model from '../../../papers/ai-memory-wall/generated/cxmt-anatomy.json';
+import './model.css';
 const NUMBER = /[-+]?\d*\.?\d+(?:e[-+]?\d+)?/gi;
 const ART = <g dangerouslySetInnerHTML={{ __html: model.markup }} />;
 const EXTRA = <g dangerouslySetInnerHTML={{ __html: model.extraMarkup }} />;

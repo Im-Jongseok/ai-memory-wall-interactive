@@ -1,12 +1,12 @@
-import { usePimStep } from '../../features/industry/pim-context';
-import { PIM_EXPLANATION, pimMode } from '../../features/industry/pim-model';
+import { usePimStep } from '../../features/industry/pim/context';
+import { PIM_EXPLANATION, pimMode } from '../../features/industry/pim/model';
 import { useEffect, useRef } from 'react';
 import { assetUrl } from '../../app/assets';
 import type { PaperDefinition, ReviewScene } from '../../papers/types';
-import { useCerebrasMode } from '../../features/industry/cerebras-context';
-import { useCxmtMode } from '../../features/industry/cxmt-context';
-import { CXMT_EXPLANATION } from '../../features/industry/cxmt-explanation';
-import { CEREBRAS_EXPLANATION } from '../../features/industry/cerebras-explanation';
+import { useCerebrasMode } from '../../features/industry/cerebras/context';
+import { useCxmtMode } from '../../features/industry/cxmt/context';
+import { CXMT_EXPLANATION } from '../../features/industry/cxmt/explanation';
+import { CEREBRAS_EXPLANATION } from '../../features/industry/cerebras/explanation';
 import { IndustryDetails } from '../../features/industry/IndustryDetails';
 export function ExplanationPanel({
   paper,

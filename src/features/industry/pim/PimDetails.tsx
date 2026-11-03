@@ -1,5 +1,5 @@
-import { usePimStep } from './pim-context';
-import { pimMode } from './pim-model';
+import { usePimStep } from './context';
+import { pimMode } from './model';
 export function PimDetails() {
   const { index } = usePimStep();
   const mode = pimMode(index);

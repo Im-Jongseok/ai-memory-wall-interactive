@@ -1,4 +1,4 @@
-import model from '../../papers/ai-memory-wall/generated/pim-anatomy.json';
+import model from '../../../papers/ai-memory-wall/generated/pim-anatomy.json';
 const ART = <g dangerouslySetInnerHTML={{ __html: model.system.markup }} />;
 /** Schematic task placement, not a commercial NeuPIMs device. */
 export function PimSystemDiagram({ active }: { active: boolean }) {
