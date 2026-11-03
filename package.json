@@ -1,0 +1,32 @@
+{
+  "name": "paper-review-library",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "model": "node build_hbm_anatomy.mjs && node build_cerebras_anatomy.mjs && node build_cxmt_anatomy.mjs && node build_pim_anatomy.mjs",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run model && npm run typecheck && vite build && npm run export",
+    "preview": "vite preview --host 127.0.0.1",
+    "export": "node scripts/export-standalone.mjs",
+    "format": "prettier --write src scripts index.html vite.config.ts docs README.md",
+    "audit:cerebras": "node build_cerebras_anatomy.mjs --audit",
+    "audit:cxmt": "node build_cxmt_anatomy.mjs --audit",
+    "audit:pim": "node build_pim_anatomy.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
+    "prettier": "3.9.10",
+    "typescript": "~6.0.3",
+    "vite": "8.3.5"
+  }
+}

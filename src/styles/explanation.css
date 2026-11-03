@@ -1,0 +1,116 @@
+.interpretation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccd8d0 transparent;
+  padding: 56px 0 28px;
+}
+.scene-heading {
+  margin-bottom: 28px;
+}
+.scene-heading h1 {
+  font-size: clamp(25px, 2.35vw, 38px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.05em;
+  white-space: pre-line;
+  margin-top: 13px;
+}
+.scene-stat {
+  font-size: clamp(31px, 2.8vw, 46px);
+  line-height: 1.22;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  white-space: pre-line;
+  color: var(--accent);
+  margin-bottom: 22px;
+  overflow-wrap: anywhere;
+}
+.scene-stat.long {
+  font-size: clamp(25px, 2.1vw, 35px);
+}
+.scene-body {
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.9;
+  letter-spacing: -0.025em;
+  color: #4e5559;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+.figure-tabs {
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.condition {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #7a8c80;
+}
+.notes-panel {
+  padding: 17px;
+  background: #f2f6f9;
+  margin-top: 24px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #4e6574;
+  flex-shrink: 0;
+}
+.notes-panel .eyebrow {
+  font-size: 8px;
+  margin-bottom: 9px;
+}
+#scene-notes {
+  white-space: pre-line;
+}
+.source-reference {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 25px;
+  font-size: 12px;
+  color: var(--accent);
+}
+.presentation-controls {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+.navigation-button {
+  height: 38px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #333d38;
+  background: #171d1ae8;
+  color: #bac8bd;
+  font-size: 11px;
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+}
+.navigation-button span {
+  font-size: 18px;
+}
+.navigation-button:not(:disabled):hover {
+  background: #25372e;
+  border-color: #779e87;
+  color: #d9f5e3;
+}
+.title-scene .interpretation {
+  display: none;
+}
+.source-only .reading-layout {
+  grid-template-columns: 1fr;
+}
+.source-only .interpretation {
+  display: none;
+}

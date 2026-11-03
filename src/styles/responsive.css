@@ -1,0 +1,160 @@
+@media (min-width: 1700px) {
+  .reader {
+    padding-left: 54px;
+    padding-right: 54px;
+  }
+  .reading-layout {
+    gap: 52px;
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+  .scene-body {
+    font-size: 19px;
+  }
+  .scene-heading h1 {
+    font-size: 38px;
+  }
+  .scene-stat {
+    font-size: 48px;
+  }
+}
+@media (max-height: 790px) and (min-width: 1000px) {
+  .interpretation {
+    justify-content: flex-start;
+    padding-top: 48px;
+  }
+  .scene-heading {
+    margin-bottom: 23px;
+  }
+  .scene-heading h1 {
+    font-size: 29px;
+  }
+  .scene-stat {
+    font-size: 35px;
+    margin-bottom: 18px;
+  }
+  .scene-stat.long {
+    font-size: 28px;
+  }
+  .scene-body {
+    font-size: 15px;
+  }
+  .figure-tabs {
+    margin-top: 22px;
+  }
+}
+@media (max-width: 1000px) {
+  .reader {
+    padding: 24px 24px 72px;
+  }
+  .reading-layout {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 24px;
+  }
+  .scene-heading h1 {
+    font-size: 28px;
+  }
+  .scene-body {
+    font-size: 14px;
+  }
+  .scene-stat {
+    font-size: 33px;
+  }
+  .scene-stat.long {
+    font-size: 27px;
+  }
+  .interpretation {
+    padding-top: 55px;
+  }
+  .page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  #app {
+    height: 100dvh;
+    min-height: 0;
+  }
+  .reader {
+    overflow: auto;
+    padding: 16px 18px 80px;
+  }
+  .fullscreen-button {
+    right: 14px;
+    top: 13px;
+    width: 32px;
+    height: 32px;
+    font-size: 19px;
+  }
+  .reading-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: auto;
+    min-height: 100%;
+  }
+  .source-column {
+    height: 65dvh;
+    min-height: 340px;
+    flex-shrink: 0;
+  }
+  .stage {
+    min-height: 0;
+  }
+  .interpretation {
+    overflow: visible;
+    display: block;
+    padding: 0 4px 20px;
+  }
+  .scene-heading {
+    margin-bottom: 20px;
+  }
+  .scene-heading h1 {
+    font-size: 29px;
+  }
+  .scene-stat {
+    font-size: 36px;
+    margin-bottom: 17px;
+  }
+  .scene-stat.long {
+    font-size: 29px;
+  }
+  .scene-body {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .presentation-controls {
+    bottom: 13px;
+    gap: 9px;
+  }
+  .navigation-button {
+    height: 38px;
+    font-size: 11px;
+    padding: 0 16px;
+    gap: 20px;
+  }
+  .source-only .source-column {
+    height: calc(100dvh - 100px);
+  }
+  .page-dialog {
+    padding: 25px 22px;
+  }
+  .page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 15px;
+  }
+  .dialog-top h2 {
+    font-size: 23px;
+  }
+  .help-dialog {
+    padding: 25px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

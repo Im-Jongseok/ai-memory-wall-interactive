@@ -1,0 +1,421 @@
+.pim-model {
+  margin: 0;
+  padding: 30px 0;
+  --pim-blue: #45667b;
+  --pim-muted: #7b8f9c;
+  --pim-border: #b8cbd7;
+}
+.pim-model .pim-svg {
+  width: 100%;
+  max-height: 65dvh;
+  overflow: visible;
+}
+.pim-heading {
+  font-size: 27px;
+  font-weight: 600;
+  fill: var(--accent);
+}
+.pim-subheading {
+  font-size: 18px;
+  font-weight: 500;
+  fill: var(--pim-blue);
+}
+.pim-package {
+  fill: #f5f8fa;
+  stroke: var(--pim-border);
+  stroke-width: 1;
+}
+.pim-detail-box {
+  fill: #fff;
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.pim-bank > rect {
+  fill: #dce7ed;
+  stroke: #96afbf;
+  stroke-width: 1;
+}
+.pim-bank .pim-weight {
+  fill: #eef3f6;
+  stroke: #b5c7d2;
+  stroke-width: 0.7;
+}
+.pim-label {
+  fill: var(--pim-blue);
+  font-size: 16px;
+  font-weight: 500;
+}
+.pim-number {
+  fill: #3b5a6e;
+  font-size: 17px;
+}
+.pim-caption {
+  fill: var(--pim-muted);
+  font-size: 14px;
+}
+.pim-small {
+  fill: var(--pim-muted);
+  font-size: 12px;
+}
+.pim-pcu {
+  fill: #fff7d8;
+  stroke: var(--highlight);
+  stroke-width: 1.2;
+}
+.pim-pcu-title {
+  font-size: 26px;
+  font-weight: 600;
+  fill: var(--highlight-ink);
+}
+.pim-host {
+  fill: #edf3f7;
+  stroke: #a4bac9;
+  stroke-width: 1;
+}
+.pim-host-title {
+  fill: var(--pim-blue);
+  font-size: 20px;
+  font-weight: 500;
+}
+.pim-output {
+  fill: var(--highlight-ink);
+  font-size: 15px;
+}
+.pim-wire {
+  fill: none;
+  stroke: #a1b7c5;
+  stroke-width: 1.6;
+  stroke-linejoin: miter;
+}
+.pim-flow {
+  fill: none;
+  stroke: var(--highlight);
+  stroke-width: 3;
+  stroke-dasharray: 7 13;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  animation: pim-flow 1400ms linear infinite;
+  animation-play-state: paused;
+  opacity: 0;
+}
+.pim-zoom-guide {
+  fill: none;
+  stroke: #cad7df;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+.pim-detail-title {
+  fill: var(--pim-blue);
+  font-size: 18px;
+  font-weight: 600;
+}
+.pim-control,
+.pim-register,
+.pim-accumulator {
+  fill: #e7eff4;
+  stroke: #a1b9c9;
+  stroke-width: 1;
+}
+.pim-multiply,
+.pim-add {
+  fill: #fff7d8;
+  stroke: #c4a447;
+  stroke-width: 1;
+}
+.pim-accumulator-value {
+  fill: var(--highlight-ink);
+  font-size: 22px;
+  font-weight: 600;
+}
+.pim-step-label {
+  fill: var(--pim-blue);
+  font-size: 17px;
+  font-weight: 500;
+}
+.pim-model[data-motion='true'][data-phase='command'] .pim-flow-command,
+.pim-model[data-motion='true'][data-phase='read'] .pim-flow-read,
+.pim-model[data-motion='true'][data-phase='compute'] .pim-flow-compute,
+.pim-model[data-motion='true'][data-phase='result'] .pim-flow-result,
+.pim-model[data-motion='true'][data-phase='system'] .pim-flow-system {
+  opacity: 1;
+  animation-play-state: running;
+}
+.pim-model[data-phase='read'] .pim-bank-0 > rect {
+  stroke: var(--highlight);
+}
+.pim-model[data-phase='compute'] .pim-multiply,
+.pim-model[data-phase='compute'] .pim-add,
+.pim-model[data-phase='result'] .pim-accumulator,
+.pim-bank .pim-weight[data-selected='true'] {
+  fill: #f8e8a7;
+  stroke: var(--highlight);
+}
+.pim-local-scene,
+.pim-system-scene {
+  transition:
+    opacity 650ms var(--ease),
+    transform 800ms var(--ease),
+    visibility 0s 650ms;
+  transform-origin: 380px 280px;
+}
+.pim-system-scene {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+}
+.pim-model[data-mode='system'] .pim-local-scene {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.97);
+}
+.pim-model[data-mode='system'] .pim-system-scene {
+  transition-delay: 0s;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.pim-model[data-mode='structure'] .pim-detail-box {
+  fill: #fafcfd;
+}
+.pim-device-title {
+  fill: var(--accent);
+  font-size: 26px;
+  font-weight: 600;
+}
+.pim-chip-top {
+  fill: #7192a4;
+  stroke: #45667b;
+  stroke-width: 1;
+}
+.pim-chip-face {
+  fill: #45667b;
+  stroke: #365469;
+  stroke-width: 1;
+}
+.pim-chip-side {
+  fill: #304d60;
+}
+.pim-compute-tile {
+  fill: #a7c0cd;
+  stroke: #c5d6df;
+  stroke-width: 0.5;
+}
+.pim-chip-text {
+  fill: #e9f0f5;
+  font-size: 14px;
+}
+.pim-memory-top {
+  fill: #d6e4ea;
+  stroke: #8faab9;
+  stroke-width: 1;
+}
+.pim-memory-side {
+  fill: #91acba;
+}
+.pim-memory-face {
+  fill: #eff4f6;
+  stroke: #8faab9;
+  stroke-width: 1;
+}
+.pim-system-bank {
+  fill: #bfd2dc;
+  stroke: #8da9b9;
+  stroke-width: 0.7;
+}
+.pim-cell-line {
+  fill: none;
+  stroke: #8da9b9;
+  stroke-width: 0.5;
+}
+.pim-system-pcu {
+  fill: #f8e8a7;
+  stroke: #c0a048;
+  stroke-width: 0.8;
+}
+.pim-pcu-small {
+  fill: var(--highlight-ink);
+  font-size: 11px;
+  font-weight: 600;
+}
+.pim-system-link {
+  fill: none;
+  stroke: #9ab2c1;
+  stroke-width: 1.7;
+}
+.pim-math-title {
+  fill: var(--pim-blue);
+  font-size: 19px;
+  font-weight: 500;
+}
+.pim-divider {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+@keyframes pim-flow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+/* Same neutral text, IEEE-blue structure and yellow active parts as the adjacent figures. */
+.pim-subheading {
+  font-size: 13px;
+  font-weight: 400;
+  fill: #8396a2;
+}
+.pim-model .iso-fill {
+  fill: var(--anatomy-paper);
+}
+.pim-model .iso-shade[data-shade='0'] {
+  fill: var(--anatomy-shade-0);
+}
+.pim-model .iso-shade[data-shade='1'] {
+  fill: var(--anatomy-shade-1);
+}
+.pim-model .iso-shade[data-shade='2'] {
+  fill: var(--anatomy-shade-2);
+}
+.pim-model .iso-shade[data-shade='3'] {
+  fill: var(--anatomy-shade-3);
+}
+.pim-model .iso-top {
+  fill: var(--anatomy-top);
+}
+.pim-model .iso-line {
+  fill: none;
+  stroke: var(--anatomy-mid);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.pim-model .iso-line[data-tone='hi'] {
+  stroke: var(--anatomy-hi);
+}
+.pim-model .iso-line[data-tone='lo'] {
+  stroke: var(--anatomy-lo);
+}
+.pim-model .iso-edge {
+  stroke-width: 0.6;
+}
+.pim-model .iso-crease {
+  opacity: 0.7;
+}
+.pim-model .iso-bevel {
+  stroke: #eff5f8;
+  stroke-width: 0.4;
+  opacity: 0.5;
+}
+.pim-model-leader {
+  fill: none;
+  stroke: #9db3c1;
+  stroke-width: 1;
+}
+.pim-terminal {
+  fill: var(--highlight);
+}
+.pim-overview {
+  transform-origin: 380px 280px;
+  transition: transform 800ms var(--ease);
+}
+.pim-compute-detail {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 500ms var(--ease),
+    visibility 0s 500ms;
+}
+.pim-model[data-mode='compute'] .pim-overview {
+  transform: translateY(-100px) scale(0.62);
+}
+.pim-model[data-mode='compute'] .pim-compute-detail {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.pim-model[data-phase='read'] [data-part='dram-bank-0'] .iso-edge,
+.pim-model[data-phase='compute'] [data-part^='simd-lane'] .iso-edge {
+  stroke: var(--highlight);
+  stroke-width: 1.3;
+}
+.pim-definition {
+  margin-bottom: 19px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #52646f;
+  word-break: keep-all;
+}
+.pim-definition strong {
+  display: block;
+  color: #52646f;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.pim-definition span {
+  display: block;
+}
+.pim-components .industry-status {
+  color: #52646f;
+  font-size: 11px;
+}
+.pim-role-table {
+  border-collapse: collapse;
+  width: 100%;
+  color: #526a79;
+  font-size: 12px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.pim-role-table caption {
+  text-align: left;
+  color: #8d7021;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+.pim-role-table th,
+.pim-role-table td {
+  border-top: 1px solid var(--line);
+  text-align: left;
+  padding: 11px 10px;
+  vertical-align: top;
+  width: 50%;
+}
+.pim-role-table th {
+  color: #45667b;
+  font-weight: 600;
+}
+.pim-role-table th + th,
+.pim-role-table td + td {
+  border-left: 1px solid var(--line);
+}
+@media (max-height: 790px) and (min-width: 601px) {
+  .pim-definition {
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+}
+@media (max-width: 1000px) {
+  .pim-role-table th,
+  .pim-role-table td {
+    padding: 9px 7px;
+  }
+}
+@media (max-width: 600px) {
+  .pim-model {
+    padding: 0;
+  }
+  .pim-model .pim-svg {
+    max-height: none;
+  }
+  .pim-definition {
+    font-size: 15px;
+  }
+  .pim-role-table {
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pim-flow {
+    animation: none;
+  }
+}

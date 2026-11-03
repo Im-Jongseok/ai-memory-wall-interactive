@@ -1,0 +1,137 @@
+.navigation-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  gap: 0;
+  border-radius: 50%;
+  background: #fffffff2;
+  border: 1px solid #d6dfd9;
+  color: #5e6b73;
+  box-shadow: 0 2px 12px #1b3d2510;
+}
+.navigation-button:not(:disabled):hover {
+  background: #f0f6fa;
+  border-color: #8faec2;
+  color: #0071a5;
+}
+.navigation-button svg {
+  display: block;
+}
+.source-column.page-pan {
+  justify-content: center;
+}
+.page-pan .stage {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.5;
+  max-height: 100%;
+}
+@media (max-width: 600px) {
+  .source-column.page-pan {
+    height: auto;
+    min-height: 0;
+    padding-top: 38px;
+  }
+  .page-pan .stage {
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.5;
+    min-height: 0;
+  }
+  .navigation-button {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+  }
+}
+
+/* Typography follows the paper: neutral body text and IEEE-blue labels. */
+.scene-heading h1 {
+  word-break: keep-all;
+  font-weight: 600;
+  font-size: clamp(24px, 2.05vw, 33px);
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+.scene-stat {
+  color: #292929;
+  font-size: clamp(28px, 2.4vw, 38px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+.scene-body {
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+}
+.eyebrow {
+  letter-spacing: 0.07em;
+}
+.scene-stat.long {
+  font-size: clamp(23px, 1.9vw, 32px);
+}
+@media (max-width: 1000px) {
+  .scene-heading h1 {
+    font-size: 26px;
+  }
+  .scene-stat {
+    font-size: 30px;
+  }
+  .scene-stat.long {
+    font-size: 25px;
+  }
+}
+
+.key-emphasis {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+}
+.emphasis-box {
+  fill: var(--highlight-fill);
+  stroke: var(--highlight);
+  stroke-width: var(--emphasis-box-width, 1.7px);
+}
+.emphasis-underline {
+  stroke: var(--highlight-line);
+  stroke-width: var(--emphasis-line-width, 2px);
+  stroke-linecap: round;
+}
+
+/* Capture the source slide while WebGL prepares, then crossfade the whole composition. */
+html[data-paper-to-model]::view-transition-old(root) {
+  animation: paper-to-model-out 560ms var(--ease) both;
+}
+html[data-paper-to-model]::view-transition-new(root) {
+  animation: paper-to-model-in 680ms var(--ease) both;
+}
+@keyframes paper-to-model-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.995);
+  }
+}
+@keyframes paper-to-model-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(1.005);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-paper-to-model]::view-transition-old(root),
+  html[data-paper-to-model]::view-transition-new(root) {
+    animation: none;
+  }
+}

@@ -1,0 +1,157 @@
+.page-dialog,
+.help-dialog {
+  border: 1px solid #d3ddd5;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 30px 36px;
+  box-shadow: 0 30px 100px #163b2525;
+  max-width: min(1150px, 92vw);
+  max-height: 88dvh;
+  overflow: auto;
+  width: 1100px;
+}
+.page-dialog::backdrop,
+.help-dialog::backdrop {
+  background: #18302588;
+  backdrop-filter: blur(8px);
+}
+.dialog-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.dialog-top h2 {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.icon-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+}
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 17px;
+  margin-top: 32px;
+}
+.page-card {
+  text-align: left;
+  padding: 0;
+  min-width: 0;
+}
+.page-card > small {
+  font-size: 10px;
+  color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.page-thumb {
+  display: block;
+  aspect-ratio: 566.929/773.858;
+  overflow: hidden;
+  border: 1px solid #d5e0d4;
+  background: white;
+  transition: transform 0.3s;
+}
+.page-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.page-card:hover .page-thumb {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+.page-card strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 14px;
+  font-weight: 500;
+  white-space: pre-line;
+  letter-spacing: -0.03em;
+}
+.help-dialog {
+  width: 520px;
+  padding: 32px;
+}
+.shortcut-list {
+  margin-top: 25px;
+}
+.shortcut-list > p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  color: #6a7d68;
+}
+kbd {
+  font-family: inherit;
+  min-width: 40px;
+  text-align: center;
+  padding: 3px 8px;
+  background: #edf4e9;
+  border-radius: 3px;
+  border: 1px solid #c6d8b9;
+  font-size: 10px;
+  color: #587648;
+}
+.help-bottom {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #7e9970;
+  margin-top: 25px;
+}
+.toast {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 82px;
+  transform: translateX(-50%) translateY(8px);
+  background: #24372cf2;
+  color: #fff;
+  padding: 11px 19px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.toast.visible {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.scene-enter {
+  animation: scene-enter 0.55s var(--ease);
+}
+@keyframes scene-enter {
+  from {
+    opacity: 0.3;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

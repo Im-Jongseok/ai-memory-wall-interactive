@@ -1,0 +1,91 @@
+.stage {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  isolation: isolate;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.stage:focus-visible {
+  outline: 1px solid #a5ddc735;
+  outline-offset: 0;
+}
+.stage.dragging {
+  cursor: grabbing;
+}
+.paper {
+  width: 1000px;
+  height: 1365px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  transition: transform 900ms var(--ease);
+  background: transparent;
+  --context-blur: 1.8px;
+}
+.paper img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+.context-image {
+  filter: none;
+  transition: filter 750ms var(--ease);
+}
+.paper.focused .context-image {
+  filter: blur(var(--context-blur)) opacity(0.6);
+}
+.focus-image {
+  clip-path: inset(0);
+  transition: clip-path 900ms var(--ease);
+  z-index: 1;
+}
+.focus-ring {
+  position: absolute;
+  pointer-events: none;
+  border: 1.4px solid #0071a550;
+  box-shadow: 0 0 0 1px #ead39315;
+  z-index: 3;
+  transition:
+    left 900ms var(--ease),
+    top 900ms var(--ease),
+    width 900ms var(--ease),
+    height 900ms var(--ease);
+}
+.stage.manual .paper,
+.stage.dragging .paper,
+.stage.switching .paper {
+  transition: none;
+}
+.stage.switching .focus-image,
+.stage.switching .focus-ring {
+  transition: none;
+}
+.hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+.hotspot {
+  position: absolute;
+  border: 1.5px solid #0071a5;
+  background: #0071a505;
+  cursor: zoom-in;
+  padding: 0;
+  transition: background 0.25s;
+}
+.hotspot:hover,
+.hotspot:focus-visible {
+  background: #0071a515;
+  box-shadow: 0 0 0 3px #0071a515;
+}
